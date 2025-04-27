@@ -14,7 +14,7 @@ public class email_service {
        SimpleMailMessage message =new SimpleMailMessage();
        message.setTo(to);
        message.setSubject(subject);
-       message.setText("Hi this is "+text+" from java mail test Service");
+       message.setText("Hi we got a response \n"+text);
        message.setFrom("playerp043@gmail.com");
 
        mailSender.send(message);
