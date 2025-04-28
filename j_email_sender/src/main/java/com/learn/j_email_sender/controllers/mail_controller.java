@@ -20,7 +20,7 @@ public class mail_controller {
     public ResponseEntity<Map<String, String>> sendEmail(@RequestBody EmailRequest emailRequest) {
         try {
             // Use the email text sent in the request
-            Email_Service.sendSimpleEmail("playerp043@gmail.com", "Response from client ", emailRequest.getText());
+            Email_Service.sendSimpleEmail("playerp043@gmail.com", "Response from client "+emailRequest.getName(), emailRequest.getText());
             Map<String, String> response = new HashMap<>();
             response.put("status", "success");
             response.put("message", "Mail sent successfully");
