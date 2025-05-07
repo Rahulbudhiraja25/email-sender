@@ -1,26 +1,23 @@
-# Step 1: Use Maven to build the project (optional if already built externally)
+# Use Maven to build the project
 FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
-WORKDIR /j_email_sender/app
+WORKDIR /app
 
-# Copy the pom and source files
-COPY pom.xml .
-COPY src ./src
+# Copy project files from the subdirectory
+COPY j_email_sender/pom.xml .
+COPY j_email_sender/src ./src
 
 # Package the application
 RUN mvn clean package -DskipTests
 
-# Step 2: Create the actual runnable image
+# Create final image with JDK
 FROM eclipse-temurin:17-jdk
 
-# Set working directory
-WORKDIR /j_email_sender/app
+WORKDIR /app
 
-# Copy the built jar from the previous image
+# Copy the built jar from the builder stage
 COPY --from=builder /app/target/*.jar app.jar
 
-# Expose the application port (adjust if your app runs on a different port)
 EXPOSE 8080
 
-# Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
